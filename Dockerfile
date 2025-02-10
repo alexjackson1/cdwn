@@ -11,6 +11,8 @@ RUN git clone -b core_v0.4.0 https://github.com/NVIDIA/Megatron-LM.git && \
   pip3 install -e . && \
   cd ..
 
+RUN pip3 install wandb
+
 ENV PYTHONPATH="/workspace/Megatron-LM:${PYTHONPATH}"
 
 COPY . .
