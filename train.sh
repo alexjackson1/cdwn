@@ -1,14 +1,17 @@
 #!/bin/bash
 
+# docker run --runtime=nvidia -it --rm --shm-size="10g" --cap-add=SYS_ADMIN --entrypoint /bin/bash alexjackson1/cdwn 
+
 set -euxo pipefail
 
-BASE_MODEL=Qwen/Qwen2.5-0.5B-Instruct
-DATA_DIR=/workspace/data/countdown
-PROJECT_NAME=cdwn
-EXPERIMENT_NAME=cdwn-2.5-0.5B-Instruct-6-gr
-ROLLOUT_TP_SIZE=1
-NUM_GPUS=1
-DATASET_NAME="alexjackson17/countdown-numbers-6-gr"
+export BASE_MODEL="Qwen/Qwen2.5-0.5B-Instruct"
+export DATA_DIR="/workspace/data/countdown"
+export PROJECT_NAME=cdwn
+export EXPERIMENT_NAME="cdwn-2.5-3B-Instruct-6-gr"
+export ROLLOUT_TP_SIZE=2
+export NUM_GPUS=2
+export DATASET_NAME="alexjackson17/countdown-numbers-6-gr"
+export VLLM_ATTENTION_BACKEND=XFORMERS
 
 python3 examples/data_preprocess/countdown.py --local_dir $DATA_DIR --dataset $DATASET_NAME --template_type qwen-instruct
 

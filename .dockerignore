@@ -1,4 +1,4 @@
-env
-Dockerfile
-.dockerignore
-.gitignore
+**
+
+!examples
+!verl

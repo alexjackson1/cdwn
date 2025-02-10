@@ -15,6 +15,7 @@ class CLIArgs(Namespace):
     local_dir: str = "data/countdown"
     hdfs_dir: str = None
     template_type: str = "base"
+    dataset: str = "alexjackson17/countdown-numbers-3-8"
 
 
 class Example(TypedDict):
@@ -54,7 +55,7 @@ if __name__ == "__main__":
     args = parser.parse_args(namespace=CLIArgs())
 
     data_source = "countdown"
-    raw_dataset = load_dataset(args["dataset"])
+    raw_dataset = load_dataset(args.dataset)
 
     train_dataset = raw_dataset["train"]
     test_dataset = raw_dataset["test"]
