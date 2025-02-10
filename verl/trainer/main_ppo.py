@@ -17,7 +17,7 @@ Note that we don't combine the main with ray_trainer as ray_trainer is used by o
 
 from verl import DataProto
 import torch
-from verl.utils.reward_score import _math, gsm8k, multiply, countdown
+from verl.utils.reward_score import math, gsm8k, countdown
 from verl.trainer.ppo.ray_trainer import RayPPOTrainer
 
 
@@ -25,7 +25,7 @@ def _select_rm_score_fn(data_source):
     if data_source == "openai/gsm8k":
         return gsm8k.compute_score
     elif data_source == "lighteval/MATH":
-        return _math.compute_score
+        return math.compute_score
     elif "countdown" in data_source:
         return countdown.compute_score
     else:
@@ -79,7 +79,7 @@ class RewardManager:
             compute_score_fn = _select_rm_score_fn(data_source)
 
             score = compute_score_fn(
-                solution_str=sequences_str, ground_truth=ground_truth
+                sequences_str, ground_truth=ground_truth
             )
             reward_tensor[i, valid_response_length - 1] = score
 
