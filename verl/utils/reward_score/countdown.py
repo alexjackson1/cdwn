@@ -144,7 +144,7 @@ def compute_score(
         score: the score for the correct answer
     """
     target: int = ground_truth["target"]
-    starting: List[int] = ground_truth["numbers"]
+    starting: List[int] = ground_truth["starting"]
     closest: int = ground_truth["closest"]
 
     expression = extract_expression(response_text)
