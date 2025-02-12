@@ -5,10 +5,12 @@ set -euxo pipefail
 export BASE_MODEL="Qwen/Qwen2.5-3B"
 export DATA_DIR="/workspace/data/countdown"
 export PROJECT_NAME=cdwn
-export EXPERIMENT_NAME="cdwn-2.5-3B-6-gr"
+export EXPERIMENT_NAME="cdwn-2.5-3B-3-8-nz-10"
 export ROLLOUT_TP_SIZE=2
 export NUM_GPUS=2
 export VLLM_ATTENTION_BACKEND=XFORMERS
+
+echo $WANDB_API_KEY | wandb login --relogin
 
 PYTHONUNBUFFERED=1 python3 -m verl.trainer.main_ppo \
  data.train_files=$DATA_DIR/train.parquet \

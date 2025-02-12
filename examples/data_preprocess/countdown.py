@@ -16,6 +16,7 @@ class CLIArgs(Namespace):
     hdfs_dir: str = None
     template_type: str = "base"
     dataset: str = "alexjackson17/countdown-numbers-3-8"
+    perfect_solutions: bool = False
 
 
 class Example(TypedDict):
@@ -51,6 +52,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--dataset", type=str, default="alexjackson17/countdown-numbers-3-8"
     )
+    parser.add_argument("--perfect_solutions", action="store_true")
 
     args = parser.parse_args(namespace=CLIArgs())
 
@@ -79,6 +81,17 @@ if __name__ == "__main__":
 
         return process_fn
 
+    def filter_fn(example: Example):
+        if args.perfect_solutions:
+            return example["delta"] == 0
+        return True
+
+    train_len = len(train_dataset)
+    test_len = len(test_dataset)
+    print(f"Train: {train_len}, Test: {test_len}")
+    train_dataset = train_dataset.filter(function=filter_fn)
+    test_dataset = test_dataset.filter(function=filter_fn)
+    print(f"Train: {len(train_dataset)}, Test: {len(test_dataset)}")
     train_dataset = train_dataset.map(function=make_map_fn("train"), with_indices=True)
     test_dataset = test_dataset.map(function=make_map_fn("test"), with_indices=True)
 
